@@ -12,9 +12,9 @@ export default function Footer() {
                 <p className="footer-links">
                     <Link to="/">Home</Link>
                     {" | "}
-                    <Link to="/menu">Menu</Link>
-                    {" | "}
                     <Link to="/about">About</Link>
+                    {" | "}
+                    <Link to="/menu">Menu</Link>
                     {" | "}
                     <Link to="/contactUS">Contact</Link>
                 </p>

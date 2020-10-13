@@ -15,7 +15,7 @@ function Sign({context}) {
     const [city, setCity]   = useState('')
     const [state, setState] = useState('')
     const [zip, setZip] = useState('')
-    const [terms, setTerms] = useState(false)
+    // const [terms, setTerms] = useState(false)
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -52,8 +52,8 @@ function Sign({context}) {
           }}
           onSubmit={handleChange}
         >
-          <div className="form-row justify-content-md-center mb-5">
-            <div className="col-lg-6 col-md-6 col-sm-12">
+          <div className="form-row justify-content-md-center">
+            <div className="col-lg-6 col-md-6 col-sm-12 mb-3">
               <input
                 type="text"
                 className="form-control"
@@ -66,7 +66,7 @@ function Sign({context}) {
               />
             </div>
 
-            <div className="col-md-6 ">
+            <div className="col-lg-6 col-md-6 col-sm-12 mb-3">
               <input
                 type="text"
                 className="form-control"
@@ -79,9 +79,9 @@ function Sign({context}) {
             </div>
           </div>
 
-          <div className="form-row justify-content-md-center  mb-5">
+          <div className="form-row justify-content-md-center">
 
-            <div className="col-md-6 ">
+            <div className="col-md-6 mb-3">
               <input
                 type="text"
                 className="form-control"
@@ -93,7 +93,7 @@ function Sign({context}) {
               />
             </div>
 
-            <div className="col-md-6 ">
+            <div className="col-md-6 mb-3">
               <div className="input-group">
                 <div className="input-group-prepend">
                   <span className="input-group-text">
@@ -114,9 +114,9 @@ function Sign({context}) {
             </div>
           </div>
 
-          <div className="form-row justify-content-md-center  mb-5">
+          <div className="form-row justify-content-md-center">
 
-            <div className="col-md-6 ">
+            <div className="col-md-6 mb-3">
               <input
                 type="password"
                 className="form-control"
@@ -129,7 +129,7 @@ function Sign({context}) {
               />
             </div>
 
-            <div className="col-md-6 ">
+            <div className="col-md-6 mb-3">
               <input
                 type="password"
                 className="form-control"
@@ -188,7 +188,7 @@ function Sign({context}) {
           </div>
 
 
-          <div className="form-group mb-3">
+          {/* <div className="form-group mb-3">
             <div className="form-check ">
               <input
                 className="form-check-input"
@@ -207,7 +207,7 @@ function Sign({context}) {
                 Agree to terms and conditions
               </label>
             </div>
-          </div>
+          </div> */}
 
           <button className="btn btn-success" type="submit">
             Submit form

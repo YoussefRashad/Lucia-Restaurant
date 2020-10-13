@@ -7,7 +7,7 @@ function Features(props) {
     
     const image = ()=>{
         return(
-            <div className="col-md-6">
+            <div className="col-md-6 mb-sm-2 mb-2">
                 <img src={props.image} alt="Bangalore Metro" style={borderRadius} width="100%" height="400px" />
             </div>
         );
@@ -15,11 +15,12 @@ function Features(props) {
     
     const data = ()=>{
         return(
-            <div className="col-md-6" style={{ backgroundColor: '#000', borderRadius: '10%'}}>
+            <div className="col-md-6 mb-sm-2 mb-2" style={{ backgroundColor: '#000', borderRadius: '10%'}}>
                 <p style={{ marginTop: "90px" }}>{props.db}</p>
             </div>
         );
     }
+
     const sorted = ()=>{
         if(props.index%2){
             return(
@@ -38,6 +39,7 @@ function Features(props) {
             );
         }
     }
+
     return (
         <>
             <div className="container mb-5 pt-5">

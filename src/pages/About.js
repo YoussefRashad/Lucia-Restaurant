@@ -18,10 +18,10 @@ const index = () => {
             <div className="col-xl-6 col-lg-6 col-md-6">
               <div className="about_thumb2">
                 <div className="img_1">
-                  <img src={Image1} alt="" />
+                  <img src={Image1} alt="about" />
                 </div>
                 <div className="img_2">
-                  <img src={Image2} alt="" />
+                  <img src={Image2} alt="about" />
                 </div>
               </div>
             </div>

@@ -2,7 +2,7 @@ import React from 'react'
 
 function Testimonial({ info, image, name, index }) {
     return (
-        <div className="col-xl-4">
+        <div className="col-xl-4 shadowItemWithoutBox">
             <div className="testmonial_active owl-carousel">
                 <div className="single_carousel mb-5">
                     <div className={`row justify-content-${index === 0 ? 'left': index === 2 ? 'center':'right'}`}>
@@ -11,7 +11,7 @@ function Testimonial({ info, image, name, index }) {
                                 <p>{info}</p>
                                 <div className="testmonial_author">
                                     <div className="thumb">
-                                        <img src={image} alt="" />
+                                        <img src={image} alt={name} />
                                     </div>
                                     <h4>{name}</h4>
                                     <div className="stars">

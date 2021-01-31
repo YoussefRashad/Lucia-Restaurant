@@ -1,15 +1,23 @@
 import React, {useState} from 'react';
 import ContactAPI from '../API/ContactAPI'
 import Alert from '../components/Alert'
+import { scrollAutoFromBackToTop } from '../components/ScrollButton';
+import { UserContext } from '../Context/User';
 
 
 const ContactUS = () => {
+  const { alert, showAlert } = React.useContext(UserContext)
   // name, email, message, subject
   const [name, setName] = useState ('');
   const [email, setEmail] = useState ('');
   const [subject, setSubject] = useState ('');
   const [message, setMessage] = useState ('');
-  const [alert, setAlert] = useState({show: false})
+
+  const isEmpty = !name || !email || !subject || !message || alert.show
+
+  React.useEffect(() => {
+    scrollAutoFromBackToTop()
+  }, [])
 
   const handleSubmit = e => {
     e.preventDefault ();
@@ -20,19 +28,17 @@ const ContactUS = () => {
       name, email, subject, message
     }).then(response=>{
       if(response.status === 200){
-        setAlert({show: true, type: 'success', text: 'Send Successfully !'})
+        showAlert({show: true, type: 'success', msg: 'Send Successfully !'})
         setName(''); setEmail(''); setSubject(''); setMessage('')
       }else{
-        setAlert({show: true, type: 'danger', text: 'Unable to send mail !'})
+        showAlert({show: true, type: 'danger', msg: 'Unable to send mail !'})
       }
       
       setTimeout(() => {
-        setAlert({show: false})
+        showAlert({show: false})
       }, 3000);
 
     })
-
-
 
   };
   
@@ -118,7 +124,20 @@ const ContactUS = () => {
           />
         </div>
 
-        <button className="btn btn-success" type="submit">Submit form</button>
+        {/* empty form text */}
+        {
+          isEmpty &&
+          <div className="row">
+            <div className="col-md form-group mb-1">
+              <p className="form-empty">Please fill out all form fields</p>
+            </div>
+          </div>
+        }
+
+        {
+          !isEmpty &&
+          <button className="btn btn-success" type="submit">Submit form</button>
+        }
       </form>
 
     </main>

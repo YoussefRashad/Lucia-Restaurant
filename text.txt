@@ -1,0 +1,12 @@
+
+Plan:
+
+Backend:
+upload all images on server
+** handle errors in forms and especially email in signUp
+
+- NodeAPIs
+- DB for all sections and pages
+- Checkout
+- Cart
+- Search

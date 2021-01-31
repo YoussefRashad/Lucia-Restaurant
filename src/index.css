@@ -1,9 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    perspective: 2000px;
     background-image: url("./assets/rest.jpg");
     background-size: cover;
 }
+.bodySections{
+    background-image: none !important;
+}
+
+/* Start Loading */
+.loading {
+    background-image: none !important;
+    background-color: white !important;
+    height: 100vh !important;
+}
+.loading .loader{
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.loading .loader .logo{
+    margin: auto;
+}
+
+/* End Loading */
+
 
 /* Navbar */
 .active {
@@ -43,7 +64,7 @@ body {
 
 .two {
     z-index: 1;
-    background-color: rgb(0, 255, 76);
+    /* background-color: rgb(0, 255, 76); */
     backface-visibility: hidden;
     transform: rotateY(180deg);
     height: 100%;
@@ -412,13 +433,15 @@ body {
     margin: 4.5rem 0;
 }
 
-.error h3 {
+.error h3,
+.noItem h2 {
     font-size: 1.5em;
     line-height: 1;
     margin-bottom: 1em;
 }
 
-.error .btn-primary {
+.error .btn-primary,
+.noItem .btn-primary {
     display: inline-block;
     text-decoration: none;
     letter-spacing: 3px;
@@ -1093,4 +1116,73 @@ footer {
     font-size: 24px;
     color: #F0542C;
     font-family: "Montserrat", sans-serif;
+}
+
+/* 
+====== 
+Scroll Button
+======
+*/
+.scroll-btn {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    background: #222;
+    /* #f50057 #01a4f1 #222 */
+    color: #fff;
+    z-index: -100;
+    opacity: 0;
+    transition: all 0.3s linear;
+    font-size: 2rem;
+    line-height: 0;
+    padding: 0.3rem 0.5rem;
+    cursor: pointer;
+}
+
+.show-scroll-btn {
+    z-index: 100000;
+    opacity: 1;
+}
+
+/* Start Search */
+
+
+.shadowItemWithoutBox {
+    line-height: 1.5rem;
+    margin-bottom: 1rem;
+    justify-content: space-between;
+    transition: all 0.3s linear;
+}
+
+.shadowItemWithoutBox:hover {
+    transform: scale(1.05);
+}
+
+/* End Search */
+
+/* Login */
+
+.register-link {
+    margin-bottom: 0;
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 16px;
+}
+
+.register-link span, .register-link a {
+    background: transparent;
+    border: none;
+    color: #01a3f0;
+    text-transform: capitalize;
+    font-size: inherit;
+    display: inline-block;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+/* End Login */
+
+.alert{
+    position: fixed !important;
+    z-index: 1000;
 }

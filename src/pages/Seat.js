@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import { withRestaurantConsumer } from '../Context'
-import { Redirect } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
+import { UserContext } from '../Context/User';
 // import DatePicker from 'react-datepicker'
 // import "react-datepicker/dist/react-datepicker.css"
 
@@ -10,30 +10,34 @@ import Alert from '../components/Alert'
 
 import Rest3 from '../assets/rest3.png';
 import Logo from '../assets/restaurant.png';
+import { scrollAutoFromBackToTop } from '../components/ScrollButton';
 
-const Seat = ({ context }) => {
+const Seat = () => {
+  const history = useHistory()
+  const {isUser, alert, showAlert} = React.useContext(UserContext)
   const [name, setName] = useState ('');
   const [dateTime, setDateTime] = useState ('');
   const [numberOfSeats, setnumberOfSeats] = useState ('');
-  const [alert, setAlert] = useState ({show : false});
 
-  if(!context.isUser){
-    return <Redirect to='/' />
-  }
+  const isEmpty = !name || !dateTime || !numberOfSeats || alert.show
+
+  React.useEffect(() => {
+    scrollAutoFromBackToTop()
+  }, [])
 
   const handleSubmit = e => {
     e.preventDefault ();
 
     SeatReservationAPI({ name, dateTime, numberOfSeats }).then(response=>{
       if(response.status === 200){
-        setAlert({show: true, type: 'success', text: 'Seat Reservation Successfully !'})
+        showAlert({show: true, type: 'success', msg: 'Seat Reservation Successfully !'})
         setName (''); setDateTime (''); setnumberOfSeats ('');
       }else{
-        setAlert({show: true, type: 'danger', text: 'Unable to Seat Reservation !'})
+        showAlert({show: true, type: 'danger', msg: 'Unable to Seat Reservation !'})
       }
       
       setTimeout(() => {
-        setAlert({show: false})
+        showAlert({show: false})
       }, 3000);
 
     })
@@ -41,9 +45,6 @@ const Seat = ({ context }) => {
 
   return (
     <>
-      {alert.show && <Alert {...alert} />}
-      
-  
       <main className="container main mb-5" id="oneSeat">
         
         <div className="twoSeat">
@@ -51,8 +52,8 @@ const Seat = ({ context }) => {
           <img src={Rest3} width="120" height="120" alt="Restaurant" />
         </div>
 
-        <form className="threeSeat" onSubmit={handleSubmit}>
-          {/* <DatePicker 
+        
+    {/* <DatePicker 
           className="form-control"
           value=""
           selected=""
@@ -62,28 +63,31 @@ const Seat = ({ context }) => {
           dateFormat="MMMM d, yyyy h:mm aa"
           timeCaption=""
         /> */}
+        <form className="threeSeat" onSubmit={handleSubmit}>
           <div className="row">
             <div
-              className="col-md-6 col-sm-12"
+              className="d-none d-sm-none d-lg-block col-lg-6"
               style={{
                 textAlign: 'center',
                 borderRight: '3px solid rgb(61, 60, 60)',
               }}
             >
-              <img
-                src={Logo}
-                width="250"
-                height="200"
-                style={{margin: '170px'}}
-                alt="Logo"
-              />
+              <div className="shadowItemWithoutBox">
+                <img
+                  src={Logo}
+                  width="250"
+                  height="200"
+                  style={{margin: '170px'}}
+                  alt="Logo"
+                />
+              </div>
             </div>
+            
             <div
               id="oneSeat"
-              className="col-md-6 col-sm-12"
+              className="col-lg-6 col-sm-12"
               style={{textAlign: 'center'}}
             >
-
               <h2><label htmlFor="name">Name of customer</label></h2>
               <input
                 style={{marginBottom: '30px'}}
@@ -121,16 +125,45 @@ const Seat = ({ context }) => {
                 <option value="5">5</option>
               </select>
 
-              <br /><br />
-              <button className="btn btn-success">book</button>
+              {/* empty form text */}
+              {
+                isEmpty &&
+                <div className="row mt-2">
+                  <div className="col-md form-group">
+                    <p className="form-empty">Please fill out all form fields</p>
+                  </div>
+                </div>
+              }
 
+              {/* login link */}
+              {
+                !isUser &&
+                <div className="row">
+                  <div className="col-md form-group">
+                    <p className="register-link">
+                      Need to login first
+                      <Link to="/login" className="text-decoration-none">
+                        click here
+                      </Link>
+                    </p>
+                  </div>
+                </div>
+              }
+
+              <br /> <br />
+
+              {/* Button */}
+              {
+                !isEmpty && isUser &&
+                <button className="btn btn-success btn-lg">book</button>
+              }
             </div>
           </div>
-        </form>;
+        </form>
 
       </main>
     </>
   );
 };
 
-export default withRestaurantConsumer(Seat);
+export default Seat;

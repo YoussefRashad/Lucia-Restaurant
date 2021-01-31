@@ -1,43 +1,41 @@
 import React from 'react'
 
 
-function Features(props) {
+function Features({ image, info, index}) {
     const commonStyle = { fontSize: "16px", color: "white", textAlign: "center"}
     const borderRadius = { borderRadius: '10%' }
     
-    const image = ()=>{
+    const getImage = ()=>{
         return(
-            <div className="col-md-6 mb-sm-2 mb-2">
-                <img src={props.image} alt="Bangalore Metro" style={borderRadius} width="100%" height="400px" />
+            <div className="col-md-6 mb-sm-2 mb-2 shadowItemWithoutBox">
+                <img src={image} alt="Bangalore Metro" style={borderRadius} width="100%" height="400px" />
             </div>
         );
     }
     
-    const data = ()=>{
+    const getData = ()=>{
         return(
-            <div className="col-md-6 mb-sm-2 mb-2" style={{ backgroundColor: '#000', borderRadius: '10%'}}>
-                <p style={{ marginTop: "90px" }}>{props.db}</p>
+            <div className="col-md-6 mb-sm-2 mb-2 shadowItemWithoutBox" style={{ backgroundColor: '#000', borderRadius: '10%'}}>
+                <p style={{ marginTop: "90px" }}>{info}</p>
             </div>
         );
     }
 
     const sorted = ()=>{
-        if(props.index%2){
+        if(index%2){
             return(
                 <>
-                    {image()}
-                    {data()}
+                    {getImage()}
+                    {getData()}
                 </>
             );
         }
-        else{
-            return (
-                <>
-                    {data()}
-                    {image()}
-                </>
-            );
-        }
+        return (
+            <>
+                {getData()}
+                {getImage()}
+            </>
+        );
     }
 
     return (

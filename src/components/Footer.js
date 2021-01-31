@@ -2,6 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom' 
 
 export default function Footer() {
+    const [date, setDate] = React.useState(new Date().toUTCString())
+    setInterval(() => {
+        setDate(new Date().toUTCString())
+    }, 1);
     
     return (
         <footer className="footer-distributed" style={{ backgroundColor: "black", color: "white", borderRadius: '5%' }}>
@@ -16,7 +20,7 @@ export default function Footer() {
                     {" | "}
                     <Link to="/menu">Menu</Link>
                     {" | "}
-                    <Link to="/contactUS">Contact</Link>
+                    <Link to="/contactUS">Contact us</Link>
                 </p>
 
                 <p className="footer-company-name">© {new Date().getFullYear()} Created by Youssef Rashad.</p>
@@ -53,7 +57,7 @@ export default function Footer() {
                 </div>
             </div>
             <div className="text-muted text-center mt-3">
-                {new Date().toUTCString()}
+                {date}
             </div>
         </footer>
     )

@@ -1,28 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { withRestaurantConsumer } from '../Context'
+import React from 'react';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 
+import { UserContext } from '../Context/User'
 import Logo from '../assets/restaurant.png';
 import defaultAvatar from '../assets/default-avatar.jpeg'
 
+const Navbar = () => {
+  const active  = useLocation().pathname
+  const history = useHistory()
+  const {isUser, logout, user} = React.useContext(UserContext)
 
-const Navbar = ( props ) => {
-  
-  const [PATH, setPATH] = useState(props.location.pathname.toLowerCase())
-  const [isUser, setIsUser] = useState(props.context.isUser)
-  
-  const profileImg = props.context.userInfo.avatar ? 
-                    `data:image/jpg;base64,${props.context.userInfo.avatar}` : defaultAvatar
-
-  setTimeout(()=>{
-    setIsUser(props.context.isUser)
-    console.log("Context2 == props, isUser ? >> ", props.context.isUser);
-  },1)
-
-
-  useEffect(() => {
-    setPATH(props.location.pathname.toLowerCase())
-  }, [props.location.pathname])
+  const NavItems = [
+    {
+      title: 'Home',
+      to: '/'
+    },
+    {
+      title: 'About',
+      to: '/about'
+    },
+    {
+      title: 'Menu',
+      to: '/menu'
+    },
+    {
+      title: 'Menu List',
+      dropdown: ['beef', 'chicken', 'dessert', 'juices', 'appetizers', 'extra']
+    },
+    {
+      title: 'ContactUS',
+      to: '/contactUS'
+    },
+    {
+      title: 'Map',
+      to: '/map'
+    }
+  ]
 
   const avatarStyle = {
     height: '100px',
@@ -30,8 +43,44 @@ const Navbar = ( props ) => {
     borderRadius: '50%'
   }
   
-  // const PATH = props.location.pathname.toLowerCase ();
-  const matchedMenu = PATH.includes('/menu/')
+  const dropDown = (item, key)=>{
+    return (
+      <li
+        className={`nav-item dropdown ${active.includes('/menu/') ? 'active' : ''}`} 
+        key={key}
+      >
+        <nav
+          className="nav-link dropdown-toggle"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Menu List
+        </nav>
+        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+        {
+          item.dropdown.map((dropdownItem, index) => {
+            return (
+              <span key={index}>
+                <Link
+                  className={(active === `/menu/${dropdownItem}` ? 'active ' : '') + 'dropdown-item text-capitalize'}
+                  to={`/menu/${dropdownItem}`}
+                >
+                  {dropdownItem}
+                </Link>
+                {
+                  dropdownItem !== 'extra' && <div className="dropdown-divider" />
+                }
+              </span>
+            )
+          })
+        }
+        </div>
+      </li>
+    )
+  }
   
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,119 +103,24 @@ const Navbar = ( props ) => {
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link
-              className={`nav-link ${PATH === '/home' || PATH === '/' ? 'active' : ''}`}
-              to='/'
-            >
-              Home
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              className={`nav-link ${PATH === '/about' ? 'active' : ''}`}
-              to="/about"
-            >
-              About
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              className={`nav-link ${PATH === '/menu' ? 'active' : ''}`}
-              to="/menu"
-            >
-              Menu
-            </Link>
-          </li>
-
-          <li
-            className={`nav-item dropdown ${matchedMenu ? 'active' : ''}`} >
-            <nav
-              className="nav-link dropdown-toggle"
-              id="navbarDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Menu List
-            </nav>
-
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <Link
-                className={`dropdown-item ${PATH === '/menu/beef' ? 'active' : ''}`}
-                to="/menu/beef"
-              >
-                Beef
-              </Link>
-
-              <div className="dropdown-divider" />
-
-              <Link
-                className={`dropdown-item ${PATH === '/menu/chicken' ? 'active' : ''}`}
-                to="/menu/chicken"
-              >
-                Chicken
-              </Link>
-
-              <div className="dropdown-divider" />
-
-              <Link
-                className={`dropdown-item ${PATH === '/menu/dessert' ? 'active' : ''}`}
-                to="/menu/dessert"
-              >
-                Dessert
-              </Link>
-              
-              <div className="dropdown-divider" />
-
-              <Link
-                className={`dropdown-item ${PATH === '/menu/juices' ? 'active' : ''}`}
-                to="/menu/juices"
-              >
-                Juices
-              </Link>
-              
-              <div className="dropdown-divider" />
-
-              <Link
-                className={`dropdown-item ${PATH === '/menu/appetizers' ? 'active' : ''}`}
-                to="/menu/appetizers"
-              >
-                Appetizers
-              </Link>
-              
-              <div className="dropdown-divider" />
-
-              <Link
-                className={`dropdown-item ${PATH === '/menu/extra' ? 'active' : ''}`}
-                to="/menu/extra"
-              >
-                Extra
-              </Link>
-            </div>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              className={`nav-link ${PATH === '/contactus' ? 'active' : ''}`}
-              to="/contactUS"
-            >
-              ContactUS
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              className={`nav-link ${PATH === '/map' ? 'active' : ''}`}
-              to="/map"
-            >
-              Map
-            </Link>
-          </li>
-
+          
+          {
+            NavItems.map((item, index)=>{
+              if (item.title ==='Menu List'){
+                return dropDown(item, index)
+              }
+              return (
+                <li className="nav-item" key={index}>
+                  <Link
+                    className={(active === item.to ? 'active ' : '') + 'nav-link'}
+                    to={item.to}
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              )
+            })
+          }
         </ul>
         
 
@@ -176,58 +130,43 @@ const Navbar = ( props ) => {
           {/* Avatar */}
           {
             isUser ? 
-                <div className="mr-3">
-                  <img src={profileImg} style={avatarStyle} alt="My Avatar" />
-                </div>
+                <Link className="mr-3" to="/myProfile">
+                  <img src={defaultAvatar || user.avatar} style={avatarStyle} alt="My Profile" />
+                </Link>
             : ''
           }
 
-          {/* Login */}
-          {
-            isUser ? '':
-          <Link
-            className={`btn btn-outline-success m-1 my-sm-0 ${PATH === '/login' ? 'active' : ''} `}
-            type="submit"
-            to="/login"
-          >
-            Log In
-          </Link>
-          }
-
-
           {/* signup */}
-
           {
             isUser ? '':
             <Link
-            className={`btn btn-outline-success m-1 my-sm-0 ${PATH === '/signup' ? 'active' : ''} `}
-            type="submit"
-            to="/signup"
-          >
-            Sign Up
+              className={`btn btn-outline-success m-1 my-sm-0 ${active === '/login' ? 'active' : ''} `}
+              type="submit"
+              to="/login"
+            >
+            login
           </Link>
           }
           
           {/* seat reservation */}
-          {
-            isUser ? 
-            <Link
-              className={`btn btn-outline-success m-1 my-sm-0 ${PATH === '/seat' ? 'active' : ''} `}
-              type="submit"
-              to="/seat"
-            >
-              Seat Reservation
-            </Link>
-            : ''
-          }
+          <Link
+            className={`btn btn-outline-success m-1 my-sm-0 ${active === '/seat' ? 'active' : ''} `}
+            type="submit"
+            to="/seat"
+          >
+            Seat Reservation
+          </Link>
 
           {/* Logout */}
           {
             isUser ? 
           <button
-            className={`btn btn-danger m-1 my-sm-0 ${PATH === '/logout' ? 'active' : ''} `}
+            className={`btn btn-danger m-1 my-sm-0 ${active === '/logout' ? 'active' : ''} `}
             type="submit"
-            onClick={props.context.Logout}
+            onClick={()=>{
+              logout()
+              history.push("/")
+            }}
           >
             Log out
           </button>
@@ -236,10 +175,9 @@ const Navbar = ( props ) => {
 
         </div>
       </div>
-          
     </nav>
   );
 };
 
 
-export default withRestaurantConsumer(Navbar)
+export default Navbar

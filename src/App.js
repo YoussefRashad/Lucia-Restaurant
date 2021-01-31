@@ -8,29 +8,61 @@ import Home from './pages/Home'
 import Seat from './pages/Seat'
 import Menu from './pages/Menu'
 import SingleMenu from './pages/SingleMenu'
+import SingleProduct from './pages/SingleProduct'
 import Map from './pages/Map'
 import ContactUS from './pages/ContactUS'
+import MyProfile from './pages/MyProfile'
 // Account - Authorization operation
-import LogIn from './pages/Accounts/LogIn'
-import SignUp from './pages/Accounts/SignUp'
+import Login from './pages/Accounts/Login'
 // components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-// MenuComponent
+import ScrollButton from './components/ScrollButton'
+import { UserContext } from './Context/User'
+
+import Alert from './components/Alert'
+import LoadingImg from './assets/restaurant.png';
 
 export default function App() {
+  const { alert } = React.useContext(UserContext)
+  
+  const [loading, setLoading] = React.useState(true) //// i will change to admin loading
+  React.useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 300);
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="loadscreen loading">
+        <div className="loader">
+          <img src={LoadingImg} className="logo mb-3 d-block" alt="loading" />
+          <div className="text-center mt-5">
+            {
+              [...new Array(7)].map((item, index) =>
+                  <div className="spinner-grow text-success mr-3" key={index} />)
+            }
+          </div>
+        </div>
+      </div>
+    )
+  }
+  
   return (
     <BrowserRouter>
-      <Route component={Navbar}/>
+      <Navbar />
+      {alert.show && <Alert />}
+      <ScrollButton />
       <Switch>
         <Route exact path='/' component={Home} />
-        <Route exact path='/home' component={Home} />
         <Route exact path='/about' component={About} />
         <Route exact path='/menu' component={Menu} />
-        <Route exact path='/menu/:name' component={SingleMenu} />
+        <Route exact path="/myProfile" component={MyProfile} />
+        <Route exact path='/menu/:category' component={SingleMenu} />
+        <Route exact path='/menu/:category/:id' component={SingleProduct} />
         <Route exact path='/map' component={Map} />
-        <Route exact path='/login' component={LogIn} />
-        <Route exact path='/signup' component={SignUp} />
+        <Route exact path='/login' component={Login} />
         <Route exact path='/seat' component={Seat} />
         <Route exact path='/ContactUS' component={ContactUS} />
         <Route path='*' component={Error} />

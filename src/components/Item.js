@@ -1,26 +1,36 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import defaultImage from '../assets/appetizers/ap1.jpg'
 
-const Item = ({type, image, salary, components}) => {
+const Item = ({name, image, price, category, _id }) => {
   return (
-    <div id="one" className="col-lg-4 col-md-6 col-sm-12">
+    <Link 
+      to={`/menu/${category}/${_id}`}
+      id="one" 
+      className="col-lg-4 col-md-6 col-sm-12 text-decoration-none"
+    >
       <div className="two">
-        <h1 style={{marginTop: '60px'}}>components</h1> <br />
-        <p style={{fontSize: '20px'}}>{components}</p>
+        <img
+          className="card-img-top"
+          src={defaultImage}
+          width="150"
+          height="100%"
+          alt={name}
+        />
       </div>
       <div className="card" style={{textAlign: 'center', margin: '10px'}}>
         <img
           className="card-img-top"
-          src={image}
+          src={defaultImage}
           width="150"
           height="200"
-          alt={type}
+          alt={name}
         />
-        <h2 className="card-title">{type}</h2>
-        <p className="card-text salaryItem">{salary}</p>
+        <h2 className="card-title">{name}</h2>
+        <p className="card-text salaryItem">{price}$</p>
       </div>
-    </div>
+    </Link>
   );
 };
 
 export default Item;
-

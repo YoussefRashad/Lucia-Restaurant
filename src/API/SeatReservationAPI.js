@@ -1,17 +1,15 @@
 
-const axios = require('axios')
-
-const baseURL = 'http://localhost:3500'
+import axios from 'axios'
+import { BE_URL } from '../utils/URL'
 
 const seatReservation = async (data)=>{
-    const token = JSON.parse(localStorage.getItem('userData')).data.token
+    const token = JSON.parse(localStorage.getItem('user'))
     try {
-        const response = await axios.post(`${baseURL}/seat-reservation`, data,{
+        const response = await axios.post(`${BE_URL}/seat-reservation`, data,{
             headers:{
                 Authorization: 'Bearer ' + token 
             }
         })
-        console.log('from API >>> ', response);
         return response
     } catch (error) {
         return { status: 500}

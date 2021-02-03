@@ -1,19 +1,16 @@
 import React, {useState} from 'react';
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { UserContext } from '../Context/User';
 // import DatePicker from 'react-datepicker'
 // import "react-datepicker/dist/react-datepicker.css"
 
 import SeatReservationAPI from '../API/SeatReservationAPI'
-import Alert from '../components/Alert'
-
 import Rest3 from '../assets/rest3.png';
 import Logo from '../assets/restaurant.png';
 import { scrollAutoFromBackToTop } from '../components/ScrollButton';
 
 const Seat = () => {
-  const history = useHistory()
   const {isUser, alert, showAlert} = React.useContext(UserContext)
   const [name, setName] = useState ('');
   const [dateTime, setDateTime] = useState ('');
@@ -25,22 +22,19 @@ const Seat = () => {
     scrollAutoFromBackToTop()
   }, [])
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault ();
-
-    SeatReservationAPI({ name, dateTime, numberOfSeats }).then(response=>{
+    const response = await SeatReservationAPI({ name, dateTime, numberOfSeats })
       if(response.status === 200){
-        showAlert({show: true, type: 'success', msg: 'Seat Reservation Successfully !'})
-        setName (''); setDateTime (''); setnumberOfSeats ('');
+        setTimeout(() => {
+          showAlert({ type: 'success', msg: 'Seat Reservation Successfully !' })
+          setName(''); setDateTime(''); setnumberOfSeats('');
+        }, 500);
       }else{
-        showAlert({show: true, type: 'danger', msg: 'Unable to Seat Reservation !'})
+        setTimeout(() => {
+          showAlert({ type: 'danger', msg: 'Unable to Seat Reservation !' })
+        }, 500);
       }
-      
-      setTimeout(() => {
-        showAlert({show: false})
-      }, 3000);
-
-    })
   };
 
   return (
@@ -155,7 +149,7 @@ const Seat = () => {
               {/* Button */}
               {
                 !isEmpty && isUser &&
-                <button className="btn btn-success btn-lg">book</button>
+                <button className="btn btn-success btn-lg">Book</button>
               }
             </div>
           </div>

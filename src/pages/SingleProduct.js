@@ -12,10 +12,8 @@ const SingleProduct = () => {
 
     useEffect(() => {
         scrollAutoFromBackToTop()
-        
         const product = getMenuListByCategoryAndID(category, id)
         setProduct(product)
-        console.log(product);
     }, []);
     
     return (

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import './assets/Styles/_loader.scss'
 import UserProvider from './Context/User'
 import MenuListProvider from './Context/MenuList'
 

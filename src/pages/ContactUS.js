@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import validator from 'validator'
 import ContactAPI from '../API/ContactAPI'
 import Alert from '../components/Alert'
 import { scrollAutoFromBackToTop } from '../components/ScrollButton';
@@ -19,27 +20,26 @@ const ContactUS = () => {
     scrollAutoFromBackToTop()
   }, [])
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault ();
-    console.log ('submitted', name, email, subject, message);
 
-
-    ContactAPI({
-      name, email, subject, message
-    }).then(response=>{
-      if(response.status === 200){
-        showAlert({show: true, type: 'success', msg: 'Send Successfully !'})
-        setName(''); setEmail(''); setSubject(''); setMessage('')
-      }else{
-        showAlert({show: true, type: 'danger', msg: 'Unable to send mail !'})
+    if (validator.isEmail(email)){
+      const response = await ContactAPI({ name, email, subject, message })
+      if (response.status === 200) {
+        setTimeout(() => {
+          showAlert({ type: 'success', msg: 'Send Successfully !' })
+          setName(''); setEmail(''); setSubject(''); setMessage('')
+        }, 500);
+      } else {
+        setTimeout(() => {
+          showAlert({ type: 'danger', msg: 'Unable to send mail !' })
+        }, 500);
       }
-      
+    }else{
       setTimeout(() => {
-        showAlert({show: false})
-      }, 3000);
-
-    })
-
+        showAlert({ type: 'danger', msg: 'Enter a valid email !' })
+      }, 500);
+    }
   };
   
 

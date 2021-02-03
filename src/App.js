@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-
+import { TIME_OF_LOADING } from './utils/URL'
 // pages
 import About from './pages/About'
 import Error from './pages/Error'
@@ -30,7 +30,7 @@ export default function App() {
   React.useEffect(() => {
     setTimeout(() => {
       setLoading(false)
-    }, 300);
+    }, TIME_OF_LOADING);
   }, [])
 
   if (loading) {
@@ -64,7 +64,7 @@ export default function App() {
         <Route exact path='/map' component={Map} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/seat' component={Seat} />
-        <Route exact path='/ContactUS' component={ContactUS} />
+        <Route exact path='/contactUS' component={ContactUS} />
         <Route path='*' component={Error} />
       </Switch>
       <Footer />

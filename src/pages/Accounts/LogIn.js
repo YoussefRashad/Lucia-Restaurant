@@ -9,7 +9,7 @@ function Login() {
   const history = useHistory()
   const { userLogin, isUser, alert, showAlert } = React.useContext(UserContext)
 
-  const [email, setEmail] = useState('test@yahoo.com');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('default')
   const [phone, setPhone] = useState('default')

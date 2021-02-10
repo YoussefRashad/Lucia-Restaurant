@@ -13,7 +13,7 @@ import Map from './pages/Map'
 import ContactUS from './pages/ContactUS'
 import MyProfile from './pages/MyProfile'
 // Account - Authorization operation
-import Login from './pages/Accounts/Login'
+import Login from './pages/Accounts/LogIn'
 // components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'

@@ -662,7 +662,7 @@ select {
 
 /* Footer */
 footer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
 }
 
